@@ -1,7 +1,7 @@
 #include "InventoryTransaction.h"
 #include "../Utils/Utils.h"
 void InventoryTransactionManager::addInventoryAction(const InventoryAction& action, bool idk) {
-	static auto InventoryTransactionManager__addAction = Utils::FindSignature("48 89 5C 24 ? 55 56 57 41 56 41 57 48 83 EC 30 45 0F B6 F8 4C 8B F2 48 8B F1 48 8B 01 48 8B 88 ? ? ? ? 48 85 C9");
+	static auto InventoryTransactionManager__addAction = Utils::FindSignature("48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 55 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC 60 02 00 00 48 8B FA ");
 	if (InventoryTransactionManager__addAction)
 		reinterpret_cast<void(__fastcall*)(InventoryTransactionManager*, const InventoryAction&, bool)>(InventoryTransactionManager__addAction)(this, action, idk);
 }
