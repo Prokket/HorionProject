@@ -20,7 +20,7 @@ PlayerInventoryProxy *Player::getSupplies() {
 }
 void LocalPlayer::unlockAchievements() {  // MinecraftEventing::fireEventAwardAchievement
 	using fireEventAward = void(__fastcall *)(void *, int);
-	static fireEventAward fireEventAwardFunc = reinterpret_cast<fireEventAward>(FindSignature("48 85 C9 0F 84 ? ? ? ? 48 89 5C 24 ? 57 48 81 EC ? ? ? ? 48 8B 01"));
+	static fireEventAward fireEventAwardFunc = reinterpret_cast<fireEventAward>(FindSignature("48 8D 05 ? ? ? ? 48 89 06 4C 89 A6 ? ? ? ? 48 8D 9E ? ? ? ? "));
 	for (int i = 0; i < 118; i++)
 		fireEventAwardFunc(this, i);
 }

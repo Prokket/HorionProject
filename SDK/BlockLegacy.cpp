@@ -10,12 +10,12 @@ Block* BlockSource::getBlock(const Vec3i& block) {
 }
 BlockActor* BlockSource::getBlockEntity(const Vec3i& block) {
 	using getBlockEntity_t = BlockActor*(__fastcall*)(BlockSource*, const Vec3i&);
-	static getBlockEntity_t getBlockEntity = reinterpret_cast<getBlockEntity_t>(FindSignature("40 55 56 57 48 83 EC ?? 8B 02"));
+	static getBlockEntity_t getBlockEntity = reinterpret_cast<getBlockEntity_t>(FindSignature("E8 ? ? ? ? 48 8B F0 4C 8B 7C 24 ? "));
 	return getBlockEntity(this, block);
 }
 Block* BlockSource::getLiquidBlock(const Vec3i& block) {
 	using getLiquidBlock_t = Block*(__fastcall*)(BlockSource*, const Vec3i&);  //E8 41 7D 6A 01 48 8B C8 48 8B 46 10
-	static getLiquidBlock_t getLiquidBlock = Utils::FuncFromSigOffset<getLiquidBlock_t>(FindSignature("E8 ?? ?? ?? ?? 65 48 8B 0C 25 ?? ?? ?? ??"), 1);
+	static getLiquidBlock_t getLiquidBlock = Utils::FuncFromSigOffset<getLiquidBlock_t>(FindSignature("48 89 5C 24 ? 57 48 83 EC 20 48 8B 01 48 8B FA 48 8B D9 48 8B 40 ? FF 15 ? ? ? ? 4C 8B 05 ? ? ? ? "), 1);
 	return getLiquidBlock(this, block);  //E8 41 7D 6A ?? ?? ?? ?? ?? ?? ?? ??
 }
 bool BlockLegacy::getCollisionShape(AABB* collShapeOut, Block* block, BlockSource* blockSource, const Vec3i* pos, Entity* actor) {
@@ -23,7 +23,7 @@ bool BlockLegacy::getCollisionShape(AABB* collShapeOut, Block* block, BlockSourc
 }
 void BlockLegacy::liquidGetFlow(Vec3* flowOut, BlockSource* reg, const Vec3i* pos) {
 	using liquid_getFlow_t = int(__fastcall*)(BlockLegacy*, Vec3*, BlockSource*, const Vec3i*);
-	static liquid_getFlow_t liquid_getDepth = Utils::FuncFromSigOffset<liquid_getFlow_t>(FindSignature("E8 ? ? ? ? 48 8B 4C 24 ? F3 0F 10 01"), 1);
+	static liquid_getFlow_t liquid_getDepth = Utils::FuncFromSigOffset<liquid_getFlow_t>(FindSignature("E8 ? ? ? ? 48 8B 4C 24 ? F3 0F 10 00 "), 1);
 
 	liquid_getDepth(this, flowOut, reg, pos);
 }
