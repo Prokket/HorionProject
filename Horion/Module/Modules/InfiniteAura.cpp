@@ -18,7 +18,7 @@ static std::vector<C_Entity*> targetList0;
 void findEntities(C_Entity* currentEntity, bool isRegularEntitie) {
 	static auto infiniteAuraMod = moduleMgr->getModule<InfiniteAura>();
 	
-	if (currentEntity == g_Data.getLocalPlayer())  // Skip Local player
+	if (currentEntity == Game.getLocalPlayer())  // Skip Local player
 		return;
 
 	if (currentEntity == 0)
@@ -33,7 +33,7 @@ void findEntities(C_Entity* currentEntity, bool isRegularEntitie) {
 	if (!Target::isValidTarget(currentEntity))
 		return;
 
-	float dist = (*currentEntity->getPos()).dist(*g_Data.getLocalPlayer()->getPos());
+	float dist = (*currentEntity->getPos()).dist(*Game.getLocalPlayer()->getPos());
 
 	if (dist < infiniteAuraMod->range) {
 		targetList0.push_back(currentEntity);
@@ -45,11 +45,11 @@ void InfiniteAura::onTick(C_GameMode* gm) {
 	//Loop through all our players and retrieve their information
 	targetList0.clear();
 
-	g_Data.forEachEntity(findEntities);
+	Game.forEachEntity(findEntities);
 	Odelay++;
 
 	if (targetList0.size() > 0 && Odelay >= delay) {
-		g_Data.getLocalPlayer()->swingArm();
+		Game.getLocalPlayer()->swingArm();
 
 		float calcYaw = (gm->player->yaw + 90) * (PI / 180);
 		float calcPitch = (gm->player->pitch) * -(PI / 180);
@@ -58,35 +58,35 @@ void InfiniteAura::onTick(C_GameMode* gm) {
 		float teleportZ = sin(calcYaw) * cos(calcPitch) * 3.5f;
 		C_MovePlayerPacket teleportPacket;
 
-		if (strcmp(g_Data.getRakNetInstance()->serverIp.getText(), "mco.cubecraft.net") == 0) {
-			vec3_t pos = *g_Data.getLocalPlayer()->getPos();
+		if (strcmp(Game.getRakNetInstance()->serverIp.getText(), "mco.cubecraft.net") == 0) {
+			vec3_t pos = *Game.getLocalPlayer()->getPos();
 
-			C_MovePlayerPacket movePlayerPacket(g_Data.getLocalPlayer(), pos);
-			g_Data.getClientInstance()->loopbackPacketSender->sendToServer(&movePlayerPacket);
+			C_MovePlayerPacket movePlayerPacket(Game.getLocalPlayer(), pos);
+			Game.getClientInstance()->loopbackPacketSender->sendToServer(&movePlayerPacket);
 
 			pos.y += 0.35f;
 
-			movePlayerPacket = C_MovePlayerPacket(g_Data.getLocalPlayer(), pos);
-			g_Data.getClientInstance()->loopbackPacketSender->sendToServer(&movePlayerPacket);
+			movePlayerPacket = C_MovePlayerPacket(Game.getLocalPlayer(), pos);
+			Game.getClientInstance()->loopbackPacketSender->sendToServer(&movePlayerPacket);
 		}
 
 		// Attack all entitys in targetList
 		if (isMulti) {
 			for (int i = 0; i < targetList0.size(); i++) {
 				vec3_t pos = *targetList0[i]->getPos();
-				teleportPacket = C_MovePlayerPacket(g_Data.getLocalPlayer(), vec3_t(pos.x - teleportX, pos.y, pos.z - teleportZ));
-				g_Data.getClientInstance()->loopbackPacketSender->sendToServer(&teleportPacket);
-				g_Data.getCGameMode()->attack(targetList0[i]);
-				teleportPacket = C_MovePlayerPacket(g_Data.getLocalPlayer(), *g_Data.getLocalPlayer()->getPos());
-				g_Data.getClientInstance()->loopbackPacketSender->sendToServer(&teleportPacket);
+				teleportPacket = C_MovePlayerPacket(Game.getLocalPlayer(), vec3_t(pos.x - teleportX, pos.y, pos.z - teleportZ));
+				Game.getClientInstance()->loopbackPacketSender->sendToServer(&teleportPacket);
+				Game.getCGameMode()->attack(targetList0[i]);
+				teleportPacket = C_MovePlayerPacket(Game.getLocalPlayer(), *Game.getLocalPlayer()->getPos());
+				Game.getClientInstance()->loopbackPacketSender->sendToServer(&teleportPacket);
 			}
 		} else {
 			vec3_t pos = *targetList0[0]->getPos();
-			teleportPacket = C_MovePlayerPacket(g_Data.getLocalPlayer(), vec3_t(pos.x - teleportX, pos.y, pos.z - teleportZ));
-			g_Data.getClientInstance()->loopbackPacketSender->sendToServer(&teleportPacket);
-			g_Data.getCGameMode()->attack(targetList0[0]);
-			teleportPacket = C_MovePlayerPacket(g_Data.getLocalPlayer(), *g_Data.getLocalPlayer()->getPos());
-			g_Data.getClientInstance()->loopbackPacketSender->sendToServer(&teleportPacket);
+			teleportPacket = C_MovePlayerPacket(Game.getLocalPlayer(), vec3_t(pos.x - teleportX, pos.y, pos.z - teleportZ));
+			Game.getClientInstance()->loopbackPacketSender->sendToServer(&teleportPacket);
+			Game.getCGameMode()->attack(targetList0[0]);
+			teleportPacket = C_MovePlayerPacket(Game.getLocalPlayer(), *Game.getLocalPlayer()->getPos());
+			Game.getClientInstance()->loopbackPacketSender->sendToServer(&teleportPacket);
 		}
 		Odelay = 0;
 	}
