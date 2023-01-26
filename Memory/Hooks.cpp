@@ -912,12 +912,12 @@ void Hooks::LoopbackPacketSender_sendToServer(LoopbackPacketSender* a, Packet* p
 		return;
 
 	if (freecamMod->isEnabled() || blinkMod->isEnabled()) {
-		if (packet->isInstanceOf<C_MovePlayerPacket>() || packet->isInstanceOf<PlayerAuthInputPacket>()) {
+		if (packet->isInstanceOf<MovePlayerPacket>() || packet->isInstanceOf<PlayerAuthInputPacket>()) {
 			if (blinkMod->isEnabled()) {
-				if (packet->isInstanceOf<C_MovePlayerPacket>()) {
-					C_MovePlayerPacket* meme = reinterpret_cast<C_MovePlayerPacket*>(packet);
+				if (packet->isInstanceOf<MovePlayerPacket>()) {
+					MovePlayerPacket* meme = reinterpret_cast<MovePlayerPacket*>(packet);
 					meme->onGround = true;                                                            //Don't take Fall Damages when turned off
-					blinkMod->getMovePlayerPacketHolder()->push_back(new C_MovePlayerPacket(*meme));  // Saving the packets
+					blinkMod->getMovePlayerPacketHolder()->push_back(new MovePlayerPacket(*meme));  // Saving the packets
 				} else {
 					blinkMod->getPlayerAuthInputPacketHolder()->push_back(new PlayerAuthInputPacket(*reinterpret_cast<PlayerAuthInputPacket*>(packet)));
 				}

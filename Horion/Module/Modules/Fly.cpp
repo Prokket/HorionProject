@@ -41,10 +41,10 @@ void Fly::onTick(GameMode *gm) {
 
 		Vec3 pos = *Game.getLocalPlayer()->getPos();
 		pos.y += 1.3f;
-		C_MovePlayerPacket a(Game.getLocalPlayer(), pos);
+		MovePlayerPacket a(Game.getLocalPlayer(), pos);
 		Game.getClientInstance()->loopbackPacketSender->sendToServer(&a);
 		pos.y -= 1.3f;
-		C_MovePlayerPacket a2(Game.getLocalPlayer(), pos);
+		MovePlayerPacket a2(Game.getLocalPlayer(), pos);
 		Game.getClientInstance()->loopbackPacketSender->sendToServer(&a2);
 
 		Vec3 moveVec;
@@ -86,10 +86,10 @@ void Fly::onTick(GameMode *gm) {
 			float calcPitch = (gm->player->pitch) * -(PI / 180);
 
 			Vec3 pos = *Game.getLocalPlayer()->getPos();
-			C_MovePlayerPacket a(Game.getLocalPlayer(), pos);
+			MovePlayerPacket a(Game.getLocalPlayer(), pos);
 			Game.getClientInstance()->loopbackPacketSender->sendToServer(&a);
 			pos.y += 0.35f;
-			a = C_MovePlayerPacket(Game.getLocalPlayer(), pos);
+			a = MovePlayerPacket(Game.getLocalPlayer(), pos);
 			Game.getClientInstance()->loopbackPacketSender->sendToServer(&a);
 
 			gm->player->velocity.y = 0.465f;

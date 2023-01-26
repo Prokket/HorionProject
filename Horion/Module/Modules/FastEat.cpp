@@ -10,7 +10,7 @@ const char* FastEat::getModuleName() {
 	return ("FastEat");
 }
 
-void FastEat::onTick(C_GameMode* gm) {
+void FastEat::onTick(GameMode* gm) {
 	C_PlayerInventoryProxy* supplies = Game.getLocalPlayer()->getSupplies();
 	C_Inventory* inv = supplies->inventory;
 	for (int i = 0; i < 36; i++) {

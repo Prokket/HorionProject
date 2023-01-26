@@ -66,28 +66,28 @@ public:
 	__int64 entityRuntimeId;  // 0x40
 };
 
-class C_SubChunkRequestPacket : public Packet {
+class SubChunkRequestPacket : public Packet {
 public:
-	C_SubChunkRequestPacket();
+	SubChunkRequestPacket();
 };
 
-class C_EmotePacket : public Packet {
+class EmotePacket : public Packet {
 public:
-	C_EmotePacket();
+	EmotePacket();
 };
 
-class C_AnimatePacket : public Packet {
+class AnimatePacket : public Packet {
 public:
-	C_AnimatePacket();
+	AnimatePacket();
 	
 	int64_t entityId;
 	int64_t action;
 	float unknown;
 };
 
-class C_NPCRequestPacket : public Packet {
+class NPCRequestPacket : public Packet {
 public:
-	C_NPCRequestPacket();
+	NPCRequestPacket();
 	
 	long entityRuntimeId;  //Test
 	__int64 Unknown0;      //Test
@@ -139,9 +139,9 @@ public:
 	char shit[0x256];
 };
 
-class C_InteractPacket : public Packet {
+class InteractPacket : public Packet {
 public:
-	C_InteractPacket(/**enum InteractPacket::Action, class ActorRuntimeID, Vec3 const&*/);
+	InteractPacket(/**enum InteractPacket::Action, class ActorRuntimeID, Vec3 const&*/);
 	
 public:
 	int action;
@@ -159,10 +159,10 @@ public:
 	int16_t itemId;            //0x003E
 };
 
-class C_MobEquipmentPacket : public Packet {
+class MobEquipmentPacket : public Packet {
 public:
-	C_MobEquipmentPacket();
-	C_MobEquipmentPacket(__int64 entityRuntimeId, ItemStack& item, int hotbarSlot, int inventorySlot);
+	MobEquipmentPacket();
+	MobEquipmentPacket(__int64 entityRuntimeId, ItemStack& item, int hotbarSlot, int inventorySlot);
 	
 	__int64 actorRuntimeId;  // 0x28
 	ItemDescriptor item;     // 0x30
@@ -190,9 +190,9 @@ public:
 	unsigned char numTransactions;                      // 0x50
 };
 
-class C_TextPacket : public Packet {
+class TextPacket : public Packet {
 public:
-	C_TextPacket();
+	TextPacket();
 
 	unsigned __int8 messageType;  // 0x28
 
@@ -210,10 +210,10 @@ public:
 
 #pragma pack(push, 8)
 
-__declspec(align(8)) class C_MovePlayerPacket : public Packet {
+__declspec(align(8)) class MovePlayerPacket : public Packet {
 public:
-	C_MovePlayerPacket();
-	C_MovePlayerPacket(LocalPlayer* player, Vec3 pos);
+	MovePlayerPacket();
+	MovePlayerPacket(LocalPlayer* player, Vec3 pos);
 	
 	__int64 entityRuntimeID;  //0x28
 	Vec3 Position;          //0x30

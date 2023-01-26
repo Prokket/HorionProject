@@ -97,7 +97,7 @@ void Killaura::onTick(GameMode* gm) {
 		if (autoweapon) findWeapon();
 
 		if (Game.getLocalPlayer()->velocity.squaredxzlen() < 0.01) {
-			C_MovePlayerPacket p(Game.getLocalPlayer(), *Game.getLocalPlayer()->getPos());
+			MovePlayerPacket p(Game.getLocalPlayer(), *Game.getLocalPlayer()->getPos());
 			Game.getClientInstance()->loopbackPacketSender->sendToServer(&p);  // make sure to update rotation if player is standing still
 		}
 
@@ -128,9 +128,9 @@ void Killaura::onEnable() {
 }
 
 void Killaura::onSendPacket(Packet* packet) {
-	if (packet->isInstanceOf<C_MovePlayerPacket>() && Game.getLocalPlayer() != nullptr && silent) {
+	if (packet->isInstanceOf<MovePlayerPacket>() && Game.getLocalPlayer() != nullptr && silent) {
 		if (!targetList.empty()) {
-			auto* movePacket = reinterpret_cast<C_MovePlayerPacket*>(packet);
+			auto* movePacket = reinterpret_cast<MovePlayerPacket*>(packet);
 			Vec2 angle = Game.getLocalPlayer()->getPos()->CalcAngle(*targetList[0]->getPos());
 			movePacket->pitch = angle.x;
 			movePacket->headYaw = angle.y;

@@ -9,11 +9,11 @@ private:
 	float speedMod = 1;
 
 public:
-	C_MovePlayerPacket* jetpack = nullptr;
+	MovePlayerPacket* jetpack = nullptr;
 	Jetpack();
 	~Jetpack();
 
-	virtual void onTick(C_GameMode* gm) override;
+	virtual void onTick(GameMode* gm) override;
 	virtual bool isFlashMode() override;
 
 	// Inherited via IModule

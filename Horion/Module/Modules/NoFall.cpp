@@ -21,8 +21,8 @@ void NoFall::onSendPacket(Packet* packet) {
 		return;
 
 	if (localPlayer->fallDistance > 2.f && mode.selected == 1) {
-		if (packet->isInstanceOf<C_MovePlayerPacket>()) {
-			C_MovePlayerPacket* movePacket = reinterpret_cast<C_MovePlayerPacket*>(packet);
+		if (packet->isInstanceOf<MovePlayerPacket>()) {
+			MovePlayerPacket* movePacket = reinterpret_cast<MovePlayerPacket*>(packet);
 			movePacket->onGround = true;
 		}
 	}

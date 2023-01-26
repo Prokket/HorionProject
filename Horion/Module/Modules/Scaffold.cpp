@@ -56,7 +56,7 @@ bool Scaffold::tryScaffold(Vec3 blockBelow) {
 			__int64 id = *Game.getLocalPlayer()->getUniqueId();
 			Game.getGameMode()->buildBlock(&blok, i, idk);
 			if (spoof) {
-				C_MobEquipmentPacket a;
+				MobEquipmentPacket a;
 				a.actorRuntimeId = id;
 				a.inventorySlot = p;
 				a.selectedSlot = p;
@@ -77,7 +77,7 @@ bool Scaffold::findBlock() {
 		ItemStack* stack = inv->getItemStack(n);
 		if (stack->item != nullptr) {
 			if ((*stack->item)->isBlock() && (*stack->item)->itemId != 0) {
-				C_MobEquipmentPacket a;
+				MobEquipmentPacket a;
 				a.actorRuntimeId = id;
 				a.inventorySlot = n;
 				a.selectedSlot = n;

@@ -26,4 +26,4 @@ public:
 	static bool removePlayer(const std::string& g);
 };
 
-extern FriendList g_friend;
+extern FriendList GameFriend;

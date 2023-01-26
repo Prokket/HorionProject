@@ -11,8 +11,8 @@ const char* Criticals::getModuleName() {
 }
 
 void Criticals::onSendPacket(C_Packet* packet) {
-	if (packet->isInstanceOf<C_MovePlayerPacket>() && Game.getLocalPlayer() != nullptr) {
-		C_MovePlayerPacket* movePacket = reinterpret_cast<C_MovePlayerPacket*>(packet);
+	if (packet->isInstanceOf<MovePlayerPacket>() && Game.getLocalPlayer() != nullptr) {
+		MovePlayerPacket* movePacket = reinterpret_cast<MovePlayerPacket*>(packet);
 		movePacket->onGround = false;
 	}
 }

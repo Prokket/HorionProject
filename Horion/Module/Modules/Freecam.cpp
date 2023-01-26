@@ -40,7 +40,7 @@ void Freecam::onMove(MoveInputHandler* input) {
 	moveVec.y = player->velocity.y;
 	moveVec.z = moveVec2d.y * speed;
 	if (pressed) player->lerpMotion(moveVec);
-	C_MovePlayerPacket p(Game.getLocalPlayer(), *Game.getLocalPlayer()->getPos());
+	MovePlayerPacket p(Game.getLocalPlayer(), *Game.getLocalPlayer()->getPos());
 	if (input->isJumping) {
 		player->velocity.y += 0.50f;
 	}
