@@ -3,16 +3,27 @@
 #include "../Memory/GameData.h"
 #include "../Utils/Logger.h"
 #include "../Utils/Utils.h"
-Block* BlockSource::getBlock(const Vec3i& block) {
+/*Block* BlockSource::getBlock(const Vec3i& block) {
 	using getBlock_t = Block*(__fastcall*)(BlockSource*, const Vec3i&);
 	static getBlock_t getBlock = reinterpret_cast<getBlock_t>(FindSignature("48 89 5C 24 ? 57 48 83 EC ? 48 8B F9 48 8B DA 8B 4A"));
 	return getBlock(this, block);
+} */
+Block* BlockSource::getBlock(const Vec3i& block) {
+	static auto getBlock = std::mem_fn(FindSignature("48 89 5C 24 ? 57 48 83 EC ? 48 8B F9 48 8B DA 8B 4A"));
+	return getBlock(this, block); 
 }
-BlockActor* BlockSource::getBlockEntity(const Vec3i& block) {
+/* BlockActor* BlockSource::getBlockEntity(const Vec3i& block) {
 	using getBlockEntity_t = BlockActor*(__fastcall*)(BlockSource*, const Vec3i&);
 	static getBlockEntity_t getBlockEntity = reinterpret_cast<getBlockEntity_t>(FindSignature("40 55 56 57 48 83 EC ?? 8B 02"));
 	return getBlockEntity(this, block);
+} */
+
+BlockActor* BlockSource::getBlockEntity(const Vec3i& block) {
+	static auto getBlockEntity = reinterpretcast<BlockActor(_fastcall)(BlockSource*, const Vec3i&)>(FindSignature("40 55 56 57 48 83 EC ?? 8B 02"));
+	return getBlockEntity(this, block); 
 }
+
+
 Block* BlockSource::getLiquidBlock(const Vec3i& block) {
 	using getLiquidBlock_t = Block*(__fastcall*)(BlockSource*, const Vec3i&);  //E8 41 7D 6A 01 48 8B C8 48 8B 46 10
 	static getLiquidBlock_t getLiquidBlock = Utils::FuncFromSigOffset<getLiquidBlock_t>(FindSignature("E8 ?? ?? ?? ?? 65 48 8B 0C 25 ?? ?? ?? ??"), 1);

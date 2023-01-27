@@ -18,7 +18,12 @@ bool ButtonInfo::isInSelectableSurface(Vec2 mouse) {
 	return surface.contains(&mouse);
 }
 
-Vec4 ButtonInfo::getSelectableSurface() {
+Vec4 ButtonInfo::getSelectableSurface() { 
+	float xOffset = centered ? -size.x / 2 : 0;
+	float yOffset = centered ? -size.y / 2 : 0;
+	return {pos.x - padding + xOffset, pos.y - padding + yOffset, pos.x + padding + size.x + xOffset, pos.y + padding + size.y + yOffset}; 
+	}
+/* Vec4 ButtonInfo::getSelectableSurface() {
 	if (centered) {
 		return {pos.x - padding - size.x / 2,
 				pos.y - padding - size.y / 2,
@@ -30,7 +35,7 @@ Vec4 ButtonInfo::getSelectableSurface() {
 				pos.x + padding + size.x,
 				pos.y + padding + size.y};
 	}
-}
+} */
 
 void ButtonInfo::draw(Vec2 mousePos, const char* label) {
 	calculateSize(label);
@@ -53,12 +58,18 @@ void ButtonInfo::draw(Vec2 mousePos, const char* label) {
 	}		
 }
 
-void ImmediateGui::startFrame() {
+/* void ImmediateGui::startFrame() {
 	Vec2 windowSize = Game.getClientInstance()->getGuiData()->windowSize;
 	Vec2 windowSizeReal = Game.getClientInstance()->getGuiData()->windowSizeReal;
 	mousePos = *Game.getClientInstance()->getMousePos();
 	mousePos = mousePos.div(windowSizeReal);
-	mousePos = mousePos.mul(windowSize);
+	mousePos = mousePos.mul(windowSize); */
+	
+   void ImmediateGui::startFrame() {
+	Vec2 windowSize = Game.getClientInstance()->getGuiData()->windowSize;
+	Vec2 windowSizeReal = Game.getClientInstance()->getGuiData()->windowSizeReal;
+	mousePos = *Game.getClientInstance()->getMousePos();
+	mousePos.scale(windowSize / windowSizeReal); 
 
 	if (Game.canUseMoveKeys()) {
 		mousePos = {-1, -1};
