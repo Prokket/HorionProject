@@ -11,7 +11,7 @@
 Int64Tag::Int64Tag(__int64 value) {
 	static uintptr_t** Int64TagVtable = 0x0;
 	if (Int64TagVtable == 0x0) {
-		uintptr_t sigOffset = FindSignature("48 8D 05 ? ? ? ? 48 89 01 49 8B 40 ? 48 89 41 ? 48 8B 03 C6 40 ? 04");
+		uintptr_t sigOffset = FindSignature("48 8D 05 ? ? ? ? 48 89 01 49 8B 40 ? 48 89 41 ? 48 8B 03 C6 40 ? ? 48 83 C4 ? 5B C3 48 8B 0B 48 8D 05 ? ? ? ? 48 89 01");
 		int offset = *reinterpret_cast<int*>(sigOffset + 3);
 		Int64TagVtable = reinterpret_cast<uintptr_t**>(sigOffset + offset + /*length of instruction*/ 7);
 		if (Int64TagVtable == 0x0 || sigOffset == 0x0)
@@ -61,7 +61,7 @@ void IntTag::read(std::string& string)  //throws MojangsonParseException
 StringTag::StringTag(std::string value) {
 	static uintptr_t** StringTagVtable = 0x0;
 	if (StringTagVtable == 0x0) {
-		uintptr_t sigOffset = FindSignature("E8 ? ? ? ? EB 04 48 8B 75 ?");
+		uintptr_t sigOffset = FindSignature("48 8D 0D ? ? ? ? 45 33 D2");
 		int offset = *reinterpret_cast<int*>(sigOffset + 3);
 		StringTagVtable = reinterpret_cast<uintptr_t**>(sigOffset + offset + /*length of instruction*/ 7);
 		if (StringTagVtable == 0x0 || sigOffset == 0x0)
@@ -103,7 +103,7 @@ void ShortTag::read(std::string& string)  //throws MojangsonParseException
 FloatTag::FloatTag(float value) {
 	static uintptr_t** FloatTagVtable = 0x0;
 	if (FloatTagVtable == 0x0) {
-		uintptr_t sigOffset = FindSignature("48 8D 05 ? ? ? ? 48 89 03 8B 47 08 89 43 08 48 8B C3 C6 43 ? 05");
+		uintptr_t sigOffset = FindSignature("48 8D 05 ? ? ? ? 48 8B 0B 48 89 01 8B 47 08 89 41 08 48 8B 03 C6 40 ? ? 48 8B 5C 24 ? 48 8B 74 24 ? 48 83 C4 ? 5F C3 48 8B 33 80 7E ? ? 0F 84 ? ? ? ?");
 		int offset = *reinterpret_cast<int*>(sigOffset + 3);
 		FloatTagVtable = reinterpret_cast<uintptr_t**>(sigOffset + offset + /*length of instruction*/ 7);
 		if (FloatTagVtable == 0x0 || sigOffset == 0x0)
@@ -131,7 +131,7 @@ void FloatTag::read(std::string& string)  // MojangsonParseException
 DoubleTag::DoubleTag(double value) {
 	static uintptr_t** DoubleTagVtable = 0x0;
 	if (DoubleTagVtable == 0x0) {
-		uintptr_t sigOffset = FindSignature("48 8D 05 ? ? ? ? 48 89 01 49 8B 40 ? 48 89 41 ? 48 8B 03 C6 40 ? 06");
+		uintptr_t sigOffset = FindSignature("48 8D 05 ? ? ? ? 48 89 01 49 8B 40 ? 48 89 41 ? 48 8B 03 C6 40 ? ? 48 83 C4 ? 5B C3 48 8B 0B 48 8D 05 ? ? ? ? 45 33 D2");
 		int offset = *reinterpret_cast<int*>(sigOffset + 3);
 		DoubleTagVtable = reinterpret_cast<uintptr_t**>(sigOffset + offset + /*length of instruction*/ 7);
 		if (DoubleTagVtable == 0x0 || sigOffset == 0x0)
@@ -158,7 +158,7 @@ void DoubleTag::read(std::string& string)  //throws MojangsonParseException
 ByteTag::ByteTag(char value) {
 	static uintptr_t** ByteTagVtable = 0x0;
 	if (ByteTagVtable == 0x0) {
-		uintptr_t sigOffset = FindSignature("48 8D 05 ? ? ? ? 48 8B 0B 48 89 01 0F B6 47 ?");
+		uintptr_t sigOffset = FindSignature("48 89 5C 24 ? 57 48 83 EC ? 0F B6 DA 48 8B F9 E8 ? ? ? ? 48 8D 05 ? ? ? ?");
 		int offset = *reinterpret_cast<int*>(sigOffset + 3);
 		ByteTagVtable = reinterpret_cast<uintptr_t**>(sigOffset + offset + /*length of instruction*/ 7);
 		if (ByteTagVtable == 0x0 || sigOffset == 0x0)
@@ -186,7 +186,7 @@ void ByteTag::read(std::string& string)  //throws MojangsonParseException
 ListTag::ListTag() {
 	static uintptr_t** ListTagVtable = 0x0;
 	if (ListTagVtable == 0x0) {
-		uintptr_t sigOffset = FindSignature("48 8D 05 ? ? ? ? 45 33 D2 49 89 00");
+		uintptr_t sigOffset = FindSignature("E8 ? ? ? ? 90 41 8B FC");
 		int offset = *reinterpret_cast<int*>(sigOffset + 3);
 		ListTagVtable = reinterpret_cast<uintptr_t**>(sigOffset + offset + /*length of instruction*/ 7);
 		if (ListTagVtable == 0x0 || sigOffset == 0x0)
@@ -262,12 +262,12 @@ void CompoundTag::write(std::stringstream& builder) {
 CompoundTag::CompoundTag() {
 	memset(this, 0, sizeof(CompoundTag));
 	using constructor_t = void(__fastcall*)(CompoundTag*);
-	static constructor_t func = reinterpret_cast<constructor_t>(FindSignature("48 8D 05 ? ? ? ? 48 8B F9 48 89 01 8B DA 48 83 C1 08 E8 ? ? ? ? 48 8D 05 ? ? ? ? 48 89 07 F6 C3 01 74 0D BA 18 00 00 00"));
+	static constructor_t func = reinterpret_cast<constructor_t>(FindSignature("E8 ? ? ? ? 48 8B F0 EB 0B"));
 	func(this);
 }
 void CompoundTag::put(TextHolder& tag, std::unique_ptr<Tag> value) {
 	using CompoundTag__putF = void(__fastcall*)(CompoundTag*, TextHolder&, std::unique_ptr<Tag>);
-	static CompoundTag__putF func = reinterpret_cast<CompoundTag__putF>(FindSignature("E8 ? ? ? ? 48 C7 45 ? 00 00 00 00 48 89 5C 24 ? "));
+	static CompoundTag__putF func = reinterpret_cast<CompoundTag__putF>(FindSignature("E8 ? ? ? ? 33 ED 48 85 ED"));
 	func(this, tag, std::move(value));
 }
 void Handler::handleWrite(Tag* value, std::stringstream& builder) {

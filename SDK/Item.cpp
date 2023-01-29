@@ -28,7 +28,7 @@ void ItemRenderer::renderGuiItemInChunk(BaseActorRenderContext *BaseActorRenderC
 ItemStack::ItemStack(const ItemStack &src) {
 	memset(this, 0x0, sizeof(ItemStack));
 	using ItemStackCopyConstructor_t = void(__fastcall *)(ItemStack &, ItemStack const &);
-	static ItemStackCopyConstructor_t ItemStackCopyConstructor = reinterpret_cast<ItemStackCopyConstructor_t>(FindSignature("E8 ? ? ? ? 48 81 84 24 ? ? ? ? A0 00 00 00 "));
+	static ItemStackCopyConstructor_t ItemStackCopyConstructor = reinterpret_cast<ItemStackCopyConstructor_t>(FindSignature("E8 ? ? ? ? 90 49 8B 8E ? ? ? ? 48 8B 01 48 8B 40 ?"));
 	ItemStackCopyConstructor(*this, src);
 	this->setVtable();
 }
@@ -38,24 +38,24 @@ ItemStack::ItemStack(const Tag &tag) {
 	this->setVtable();
 	fromTag(tag);
 	/*using ItemStackBase__loadItemF = void(__fastcall*)(ItemStack*,Tag const&);
-	static ItemStackBase__loadItemF ItemStackBase__loadItem = reinterpret_cast<ItemStackBase__loadItemF>(FindSignature("48 8B C4 55 57 41 56 48 8D 68 A1 48 81 EC ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 58 ? 48 89 70 ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 45 ? 48 8B DA 48 8B F9 48 89 4D ? 33 D2 41 B8 ? ? ? ? 48 8D 4D A7 E8 ? ? ? ? 48 8D 05 ? ? ? ?"));
+	static ItemStackBase__loadItemF ItemStackBase__loadItem = reinterpret_cast<ItemStackBase__loadItemF>(FindSignature("E8 ? ? ? ? 90 49 8B 5E ? 4D 8B 76 ?")); Updated to 1.19.51 even tho its not in use stuped
 	ItemStackBase__loadItem(this, tag);*/
 }
 
 void ItemStack::fromTag(const Tag &tag) {
 	using ItemStackBase__loadItemF = void(__fastcall *)(ItemStack *, Tag const &);
-	static ItemStackBase__loadItemF fromTag = reinterpret_cast<ItemStackBase__loadItemF>(FindSignature("E8 ? ? ? ? 90 80 7D ? 00 74 40 "));
+	static ItemStackBase__loadItemF fromTag = reinterpret_cast<ItemStackBase__loadItemF>(FindSignature("E8 ? ? ? ? 90 80 7D ? 00 74 40"));
 	fromTag(this, tag);
 }
 
 void ItemStack::save(CompoundTag **tag) {
 	using ItemStackBase__saveF = void(__fastcall *)(ItemStack *, CompoundTag **);
-	ItemStackBase__saveF save = reinterpret_cast<ItemStackBase__saveF>(FindSignature("E8 ? ? ? ? 90 48 8B 7D ? 4C 89 65 ? "));
+	ItemStackBase__saveF save = reinterpret_cast<ItemStackBase__saveF>(FindSignature("E8 ? ? ? ? 0F B6 7C 24 ? 48 8B 4E ?"));
 	return save(this, tag);
 }
 void ItemStack::setUserData(std::unique_ptr<Tag> tag) {
 	using setUserData_t = void(__fastcall *)(ItemStack *, std::unique_ptr<Tag>);
-	setUserData_t setUserData = reinterpret_cast<setUserData_t>(FindSignature("E8 ? ? ? ? 8B 7D 50 "));
+	setUserData_t setUserData = reinterpret_cast<setUserData_t>(FindSignature("E8 ? ? ? ? 8B 7D 50"));
 	setUserData(this, std::move(tag));
 }
 void ItemStack::reinit(BlockLegacy &legacy, int count) {
@@ -68,28 +68,28 @@ void ItemStack::reinit(Item &item, int count, int itemData) {
 }
 int ItemStack::getEnchantValue(int enchantId) {
 	using getEnchantsLevel_t = int(__fastcall *)(int, ItemStack *);
-	static getEnchantsLevel_t getEnchantsLevel = reinterpret_cast<getEnchantsLevel_t>(FindSignature("48 8D 05 ? ? ? ? 48 89 01 48 8D 05 ? ? ? ? 48 89 41 ? 48 8D 05 ? ? ? ? 48 89 41 ? 0F 57 C0 63"));
+	static getEnchantsLevel_t getEnchantsLevel = reinterpret_cast<getEnchantsLevel_t>(FindSignature("48 8B 81 ? ? ? ? 8B 40 18"));
 	return getEnchantsLevel(enchantId, this);
 }
 void ItemStack::setVtable(void) {
-	static uintptr_t sigOffset = FindSignature("E8 ? ? ? ? 41 88 36");
+	static uintptr_t sigOffset = FindSignature("48 8D 05 ? ? ? ? 48 89 01 4C 89 71 ? 4C 89 71 ? 48 89 51 ?");
 	int offset = *reinterpret_cast<int *>(sigOffset + 1);
 	this->vTable = reinterpret_cast<uintptr_t **>(sigOffset + offset + /*length of instruction*/ 7);
 }
 Item ***ItemRegistry::getItemFromId(void *ptr, int itemId) {
 	using getItemFromId_t = Item ***(__fastcall *)(void *, int);
-	static getItemFromId_t getItemFromId = reinterpret_cast<getItemFromId_t>(FindSignature("48 89 5C 24 ? 48 89 74 24 ? 55 57 41 56 48 8B EC 48 83 EC 60 48 8B F9 "));
+	static getItemFromId_t getItemFromId = reinterpret_cast<getItemFromId_t>(FindSignature("E8 ? ? ? ? 66 3B C3 75 18"));
 	return getItemFromId(ptr, itemId);
 }
 
 Item ***ItemRegistry::lookUpByName(void *a1, void *a2, TextHolder &text) {
 	using ItemRegistry__lookupByName_t = Item ***(__fastcall *)(void *, void *, TextHolder &);
-	static ItemRegistry__lookupByName_t ItemRegistry__lookupByNameF = reinterpret_cast<ItemRegistry__lookupByName_t>(FindSignature("E8 ? ? ? ? 90 48 8B 8D ? ? ? ? 48 85 C9 74 29 "));
+	static ItemRegistry__lookupByName_t ItemRegistry__lookupByNameF = reinterpret_cast<ItemRegistry__lookupByName_t>(FindSignature("E8 ? ? ? ? C7 44 24 ? ? ? ? ? 48 8B 95 ? ? ? ?"));
 	return ItemRegistry__lookupByNameF(a1, a2, text);
 }
 
 ItemDescriptor::ItemDescriptor(int id, int16_t itemData) {
 	using ItemDescriptor__ItemDescriptor_t = ItemDescriptor *(__fastcall *)(ItemDescriptor *, int, int16_t);
-	static ItemDescriptor__ItemDescriptor_t func = reinterpret_cast<ItemDescriptor__ItemDescriptor_t>(FindSignature("48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 56 48 83 EC 50 48 8B 05 ? ? ? ? 48 33 C4 48 89 44 24 ? 41 8B E8 "));
+	static ItemDescriptor__ItemDescriptor_t func = reinterpret_cast<ItemDescriptor__ItemDescriptor_t>(FindSignature("48 8D 35 ? ? ? ? F6 C3 02"));
 	func(this, id, itemData);
 }

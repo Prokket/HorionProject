@@ -18,7 +18,7 @@ size_t AABBHasher::operator()(const AABB& i) const {
 void GameData::retrieveClientInstance() {
 	static uintptr_t clientInstanceOffset = 0x0;
 	if (clientInstanceOffset == 0x0) {
-		clientInstanceOffset = GetOffsetFromSig("48 8B C4 48 89 58 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 70 ? 0F 29 78 ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 4C 8B ? 48 89 54 24 ? 4C", 3);
+		clientInstanceOffset = GetOffsetFromSig("40 53 48 83 EC ? 48 8B D9 48 8B 49 ? 48 85 C9 74 11 48 8B 01 BA ? ? ? ? 48 8B 00 FF 15 ? ? ? ? 48 8B 4B ? 48 85 C9 74 11 48 8B 01 BA ? ? ? ? 48 8B 00 FF 15 ? ? ? ? 48 8B 4B ? 48 85 C9 74 17", 3);
 		logF("Client: %llX", clientInstanceOffset);
 	}
 	Game.clientInstance = reinterpret_cast<ClientInstance*>(Utils::readPointer<uintptr_t*>(clientInstanceOffset, {0x0, 0x0, 0x58}));

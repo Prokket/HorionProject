@@ -45,13 +45,13 @@ void Hooks::Init() {
 		/*void* testy = reinterpret_cast<void*>(FindSignature("48 8B 05 61 DF CD 02 48 85 C0 75 07"));
 		g_Hooks.testyHook = std::make_unique<FuncHook>(testy, Hooks::testy);*/
 		
-		void* timeOfDay = reinterpret_cast<void*>(FindSignature("E8 ? ? ? ? 0F 28 C8 0F 57 C0 F3 0F 59 0D ? ? ? ? "));
+		void* timeOfDay = reinterpret_cast<void*>(FindSignature("E8 ? ? ? ? 0F 28 C8 0F 57 C0 F3 0F 59 0D ? ? ? ?"));
 		g_Hooks.Dimension_getTimeOfDayHook = std::make_unique<FuncHook>(timeOfDay, Hooks::Dimension_getTimeOfDay);
 
-		void* sunItensity = reinterpret_cast<void*>(FindSignature("48 89 5C 24 ? 57 48 83 EC 50 48 8B B9 ? ? ? ? "));
+		void* sunItensity = reinterpret_cast<void*>(FindSignature("48 89 5C 24 ? 57 48 83 EC 50 48 8B B9 ? ? ? ?"));
 		g_Hooks.Dimension_getSunIntensityHook = std::make_unique<FuncHook>(sunItensity, Hooks::Dimension_getSunIntensity);
 
-		void* chestTick = reinterpret_cast<void*>(FindSignature("E8 ? ? ? ? 49 8B D6 48 8B CE 48 8B 5C 24 ? "));
+		void* chestTick = reinterpret_cast<void*>(FindSignature("E8 ? ? ? ? 49 8B D6 48 8B CE 48 8B 5C 24 ?"));
 		g_Hooks.ChestBlockActor_tickHook = std::make_unique<FuncHook>(chestTick, Hooks::ChestBlockActor_tick);
 
 		void* lerpFunc = reinterpret_cast<void*>(FindSignature("48 8D 05 ? ? ? ? 48 89 01 49 8B 00 48 89 41 ? 48"));
@@ -168,25 +168,25 @@ void Hooks::Init() {
 			if (localPlayerVtable == 0x0)
 				logF("LocalPlayer Vtable not working!!!");
 			else {
-				g_Hooks.Actor_startSwimmingHook = std::make_unique<FuncHook>(localPlayerVtable[201], Hooks::Actor_startSwimming);
+				g_Hooks.Actor_startSwimmingHook = std::make_unique<FuncHook>(localPlayerVtable[202], Hooks::Actor_startSwimming);
 
 				g_Hooks.Actor_ascendLadderHook = std::make_unique<FuncHook>(localPlayerVtable[339], Hooks::Actor_ascendLadder);
 				
 				g_Hooks.Actor__setRotHook = std::make_unique<FuncHook>(localPlayerVtable[27], Hooks::Actor__setRot);
 
-				g_Hooks.Actor_swingHook = std::make_unique<FuncHook>(localPlayerVtable[219], Hooks::Actor_swing);
+				g_Hooks.Actor_swingHook = std::make_unique<FuncHook>(localPlayerVtable[220], Hooks::Actor_swing);
 
-				g_Hooks.JumpPowerHook = std::make_unique<FuncHook>(localPlayerVtable[345], Hooks::JumpPower); //jump from ground with movement proxy
+				g_Hooks.JumpPowerHook = std::make_unique<FuncHook>(localPlayerVtable[5], Hooks::JumpPower); //jump from ground with movement proxy
 
 				//g_Hooks.setPosHook = std::make_unique<FuncHook>(localPlayerVtable[19], Hooks::setPos);
 
-				g_Hooks.Actor_baseTickHook = std::make_unique<FuncHook>(localPlayerVtable[49], Hooks::Actor_baseTick);
+				g_Hooks.Actor_baseTickHook = std::make_unique<FuncHook>(localPlayerVtable[51], Hooks::Actor_baseTick);
 
-				g_Hooks.Mob__isImmobileHook = std::make_unique<FuncHook>(localPlayerVtable[91], Hooks::Mob__isImmobile);
+				g_Hooks.Mob__isImmobileHook = std::make_unique<FuncHook>(localPlayerVtable[94], Hooks::Mob__isImmobile);
 
-				g_Hooks.Actor_isInWaterHook = std::make_unique<FuncHook>(localPlayerVtable[71], Hooks::Actor_isInWater);
+				g_Hooks.Actor_isInWaterHook = std::make_unique<FuncHook>(localPlayerVtable[73], Hooks::Actor_isInWater);
 
-				g_Hooks.Player_tickWorldHook = std::make_unique<FuncHook>(localPlayerVtable[364], Hooks::Player_tickWorld);
+				g_Hooks.Player_tickWorldHook = std::make_unique<FuncHook>(localPlayerVtable[369], Hooks::Player_tickWorld);
 
 				//g_Hooks.Actor__isInvisibleHook = std::make_unique<FuncHook>(localPlayerVtable[59], Hooks::Actor__isInvisible);
 			}
@@ -198,7 +198,7 @@ void Hooks::Init() {
 			if (packetSenderVtable == nullptr)
 				logF("LoopbackPacketSenderVtable is invalid");
 			else {
-				g_Hooks.LoopbackPacketSender_sendToServerHook = std::make_unique<FuncHook>(packetSenderVtable[7], Hooks::LoopbackPacketSender_sendToServer);
+				g_Hooks.LoopbackPacketSender_sendToServerHook = std::make_unique<FuncHook>(packetSenderVtable[2], Hooks::LoopbackPacketSender_sendToServer);
 			}
 		} else logF("LoopbackPacketSender is null");
 
@@ -228,7 +228,7 @@ void Hooks::Init() {
 
 		// PackAccessStrategy vtables for isTrusted
 		{
-			uintptr_t** directoryPackVtable = GetVtableFromSig("48 8d 05 ? ? ? ? 49 89 06 49 8d 76 ? 45 33 e4", 3);
+			uintptr_t** directoryPackVtable = GetVtableFromSig("80 B9 ? ? ? ? 00 75 0C 83 B9 ? ? ? ? 01", 3);
 			if (directoryPackVtable == 0x0)
 				logF("directoryPackVtable signature not working!!!");
 			else g_Hooks.DirectoryPackAccessStrategy__isTrustedHook = std::make_unique<FuncHook>(directoryPackVtable[6], Hooks::DirectoryPackAccessStrategy__isTrusted);

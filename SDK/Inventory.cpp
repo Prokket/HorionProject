@@ -5,7 +5,7 @@
 void Inventory::dropSlot(int slot) {
 	// FillingContainer::dropSlot
 	using drop_t = void(__fastcall*)(Inventory*, int, char);
-	static drop_t func = reinterpret_cast<drop_t>(FindSignature("48 8D 05 ? ? ? ? 48 89 06 48 8D 8E ? ? ? ? 33 C0 48 89 01 48 89 41 ? 48 89 41 ? 48 89 9E ? ? ? ? "), 11);
+	static drop_t func = reinterpret_cast<drop_t>(FindSignature("E8 ? ? ? ? 85 C0 79 1B"), 11);
 	if (func != 0)
 		func(this, slot, 0);
 }

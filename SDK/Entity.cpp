@@ -7,26 +7,26 @@ InventoryTransactionManager *Entity::getTransactionManager() {
 	static unsigned int offset = 0x1210;
 	//if (offset == 0) {
 	// EnchantCommand::execute
-	//offset = *reinterpret_cast<int *>(FindSignature("48 89 5C 24 18 55 56 57 41 56 41 57 48 83 EC 30 45 0F B6 F8 4C ") + 3);
+	//offset = *reinterpret_cast<int *>(FindSignature("E8 ? ? ? ? 48 8B 07 48 8B 48 ? 48 85 C9") + 3);
 	//}
 	return reinterpret_cast<InventoryTransactionManager *>(reinterpret_cast<__int64>(this) + offset);
 }
 PlayerInventoryProxy *Player::getSupplies() {
 	static unsigned int offset = 0xB70;
 	/*if (offset == 0) {
-		offset = *reinterpret_cast<int *>(FindSignature("48 8B 51 ?? 4C 8B 82 ?? ?? ?? ?? 48 8B B2 ?? ?? ?? ?? 41 80 B8") + 7);  // GameMode::startDestroyBlock -> GameMode::_canDestroy -> getSupplies
+		offset = *reinterpret_cast<int *>(FindSignature("E8 ? ? ? ? 48 8D 48 ? 48 8B 01") + 7);  // GameMode::startDestroyBlock -> GameMode::_canDestroy -> getSupplies
 	}*/
 	return *reinterpret_cast<PlayerInventoryProxy **>(reinterpret_cast<__int64>(this) + offset);
 }
 void LocalPlayer::unlockAchievements() {  // MinecraftEventing::fireEventAwardAchievement
 	using fireEventAward = void(__fastcall *)(void *, int);
-	static fireEventAward fireEventAwardFunc = reinterpret_cast<fireEventAward>(FindSignature("48 8D 05 ? ? ? ? 48 89 06 4C 89 A6 ? ? ? ? 48 8D 9E ? ? ? ? "));
+	static fireEventAward fireEventAwardFunc = reinterpret_cast<fireEventAward>(FindSignature("E8 ? ? ? ? 48 8B BE ? ? ? ? 48 8B CE"));
 	for (int i = 0; i < 118; i++)
 		fireEventAwardFunc(this, i);
 }
 void LocalPlayer::applyTurnDelta(Vec2 *viewAngleDelta) {
 	using applyTurnDelta = void(__thiscall *)(void *, Vec2 *);
-	static applyTurnDelta TurnDelta = reinterpret_cast<applyTurnDelta>(FindSignature("48 8B C4 48 89 58 18 48 89 68 20 56 57 41 56 48 81 EC ?? ?? ?? ?? 0F 29 70 D8 0F 29 78 C8 44 0F 29 40 ?? 48 8B 05 ?? ?? ?? ??"));
+	static applyTurnDelta TurnDelta = reinterpret_cast<applyTurnDelta>(FindSignature("E8 ? ? ? ? 45 0F 2E C3"));
 	TurnDelta(this, viewAngleDelta);
 }
 void LocalPlayer::setGameModeType(int gma) {
@@ -46,7 +46,7 @@ float Entity::getBlocksPerSecond() {
 
 void Entity::lerpTo(Vec3 const &pos, Vec2 const &a2, int a3) { //lerpTo was removed from the Player vtable so this is how we are going to use it from now on
 	using lerpTo = void(__fastcall *)(Entity *, Vec3 const &, Vec2 const &, int);
-	static lerpTo lerp = reinterpret_cast<lerpTo>(FindSignature("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 41 56 48 83 EC 30 48 8B D9 "));
+	static lerpTo lerp = reinterpret_cast<lerpTo>(FindSignature("48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 41 56 48 83 EC 30 48 8B D9"));
 	lerp(this, pos, a2, a3);
 }
 

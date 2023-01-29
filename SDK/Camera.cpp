@@ -9,7 +9,7 @@ void Camera::getEulerAngles(Vec3* vec) {
 }
 void Camera::setOrientation(float pitch, float yaw, float roll) {
 	using cam_setOrientation_t = void(__fastcall*)(Camera*, float, float, float);
-	static auto cam_setOrientation = reinterpret_cast<cam_setOrientation_t>(FindSignature("40 53 48 81 EC ?? ?? ?? ?? 0F 29 74 24 ?? 0F 57"));
+	static auto cam_setOrientation = reinterpret_cast<cam_setOrientation_t>(FindSignature("E8 ? ? ? ? 44 0F B7 F8 48 8B 0B"));
 	cam_setOrientation(this, pitch, yaw, roll);
 }
 void Camera::getPlayerRotation(Vec2* angOut) {
