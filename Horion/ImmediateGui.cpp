@@ -58,18 +58,12 @@ void ButtonInfo::draw(Vec2 mousePos, const char* label) {
 	}		
 }
 
-/* void ImmediateGui::startFrame() {
+void ImmediateGui::startFrame() {
 	Vec2 windowSize = Game.getClientInstance()->getGuiData()->windowSize;
 	Vec2 windowSizeReal = Game.getClientInstance()->getGuiData()->windowSizeReal;
 	mousePos = *Game.getClientInstance()->getMousePos();
 	mousePos = mousePos.div(windowSizeReal);
-	mousePos = mousePos.mul(windowSize); */
-	
-   void ImmediateGui::startFrame() {
-	Vec2 windowSize = Game.getClientInstance()->getGuiData()->windowSize;
-	Vec2 windowSizeReal = Game.getClientInstance()->getGuiData()->windowSizeReal;
-	mousePos = *Game.getClientInstance()->getMousePos();
-	mousePos.scale(windowSize / windowSizeReal); 
+	mousePos = mousePos.mul(windowSize);
 
 	if (Game.canUseMoveKeys()) {
 		mousePos = {-1, -1};
