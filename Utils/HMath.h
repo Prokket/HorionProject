@@ -2,7 +2,7 @@
 #define PI (3.1415927f)
 
 #include <math.h>
-
+#include <stdlib.h>
 static constexpr float DEG_RAD2 = PI / 360.0f;
 static constexpr float DEG_RAD = 180.0f / PI;
 static constexpr float RAD_DEG = PI / 180.f;
@@ -12,7 +12,6 @@ inline float lerp(float a, float b, float t) {
 }
 
 struct Vec2 {
-
 	union {
 		struct {
 			float x, y;
@@ -28,7 +27,7 @@ struct Vec2 {
 		return *this;
 	}
 
-	static Vec2 fromAngle(float angle){
+	static Vec2 fromAngle(float angle) {
 		return Vec2((float)-sin(angle), (float)cos(angle));
 	}
 
@@ -71,12 +70,11 @@ struct Vec2 {
 		return div(magnitude());
 	}
 
-	Vec2 cross(){
+	Vec2 cross() {
 		return Vec2(-y, x);
 	}
 
 	float dot(float ox, float oy) const { return x * ox + y * oy; }
-
 
 	float dot(const Vec2 &o) const { return x * o.x + y * o.y; }
 
@@ -185,7 +183,7 @@ struct Vec3 {
 	float squaredlen() const { return x * x + y * y + z * z; }
 	float squaredxzlen() const { return x * x + z * z; }
 
-	Vec3 lerp(const Vec3& other, float tx, float ty, float tz) const {
+	Vec3 lerp(const Vec3 &other, float tx, float ty, float tz) const {
 		Vec3 ne;
 		ne.x = x + tx * (other.x - x);
 		ne.y = y + ty * (other.y - y);
@@ -288,7 +286,7 @@ struct Vec3i {
 	}
 
 	Vec3i(int *v) : x(v[0]), y(v[1]), z(v[2]) {}
-	
+
 	Vec3 toVec3t() const {
 		return Vec3(x, y, z);
 	}
@@ -314,7 +312,7 @@ struct Vec3i {
 		return Vec3i(x - ox, y - oy, z - oz);
 	}
 
-	Vec3i sub(const Vec3i& o) const {
+	Vec3i sub(const Vec3i &o) const {
 		return Vec3i(x - o.x, y - o.y, z - o.z);
 	}
 
@@ -496,30 +494,30 @@ struct glmatrixf {
 		return Vec3(v[12], v[13], v[14]);
 	}
 
-	//assault cube world2screen
+	// assault cube world2screen
 	Vec3 transform(glmatrixf *matrix, Vec3 &totransform) {
 		return Vec3(matrix->transformx(totransform),
-					  matrix->transformy(totransform),
-					  matrix->transformz(totransform))
+					matrix->transformy(totransform),
+					matrix->transformz(totransform))
 			.div(matrix->transformw(totransform));
 	}
 
-	///pos should be the exact center of the enemy model for scaling to work properly
+	/// pos should be the exact center of the enemy model for scaling to work properly
 	Vec3 WorldToScreen(Vec3 pos, int width, int height) {
-		//Matrix-vector Product, multiplying world(eye) coordinates by projection matrix = clipCoords
+		// Matrix-vector Product, multiplying world(eye) coordinates by projection matrix = clipCoords
 		Vec4 clipCoords;
 		clipCoords.x = pos.x * v[0] + pos.y * v[4] + pos.z * v[8] + v[12];
 		clipCoords.y = pos.x * v[1] + pos.y * v[5] + pos.z * v[9] + v[13];
 		clipCoords.z = pos.x * v[2] + pos.y * v[6] + pos.z * v[10] + v[14];
 		clipCoords.w = pos.x * v[3] + pos.y * v[7] + pos.z * v[11] + v[15];
 
-		//perspective division, dividing by clip.W = Normalized Device Coordinates
+		// perspective division, dividing by clip.W = Normalized Device Coordinates
 		Vec3 NDC;
 		NDC.x = clipCoords.x / clipCoords.w;
 		NDC.y = clipCoords.y / clipCoords.w;
 		NDC.z = clipCoords.z / clipCoords.w;
 
-		//viewport tranform to screenCooords
+		// viewport tranform to screenCooords
 
 		Vec3 playerscreen;
 		playerscreen.x = (width / 2 * NDC.x) + (NDC.x + width / 2);
@@ -532,8 +530,8 @@ struct glmatrixf {
 struct AABB {
 	Vec3 lower;
 	Vec3 upper;
-	//bool isZero = false;
-	//char padding[3];
+	// bool isZero = false;
+	// char padding[3];
 	AABB() {}
 	AABB(Vec3 l, Vec3 h) : lower(l), upper(h){};
 	AABB(const AABB &aabb) {
@@ -550,7 +548,7 @@ struct AABB {
 		return lower == rhs.lower && upper == rhs.upper;
 	}
 
-	bool isFullBlock(){
+	bool isFullBlock() {
 		auto diff = lower.sub(upper);
 		return fabsf(diff.y) == 1 && fabsf(diff.x) == 1 && fabsf(diff.z) == 1;
 	}
@@ -580,11 +578,16 @@ struct AABB {
 	}
 };
 
-/*
 inline int random(int start, int end) {
 	return rand() % (end - start + 1) + start;
 }
 inline float randomf(int start, int end) {
 	return (float)random(start, end);
 }
-*/
+
+inline float RandomFloat(float a, float b) {
+	float random = ((float)rand()) / (float)RAND_MAX;
+	float diff = b - a;
+	float r = random * diff;
+	return a + r;
+}

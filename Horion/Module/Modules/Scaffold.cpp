@@ -159,7 +159,6 @@ void Scaffold::onPostRender(MinecraftUIRenderContext* ctx) {
 	auto selectedItem = player->getSelectedItem();
 	if ((selectedItem == nullptr || selectedItem->count == 0 || selectedItem->item == nullptr || !selectedItem->getItem()->isBlock()) && !autoSelect)  // Block in hand?
 		return;
-
 	// Adjustment by velocity
 	float speed = Game.getLocalPlayer()->velocity.magnitudexz();
 	Vec3 vel = Game.getLocalPlayer()->velocity;
@@ -216,8 +215,6 @@ void Scaffold::onPostRender(MinecraftUIRenderContext* ctx) {
 
 		if (player->region->getBlock(Vec3i(blockBelow.floor()))->blockLegacy->material->isReplaceable) {
 			tryClutchScaffold(blockBelow);
-			if (hive) tryClutchScaffold(nextBlock);
-		} else {
 			if (!hive) {
 				if (!tryScaffold(blockBelow)) {
 					if (speed > 0.05f) {  // Are we actually walking?

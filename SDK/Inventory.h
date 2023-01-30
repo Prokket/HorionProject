@@ -1,6 +1,6 @@
 #pragma once
+#include "../Utils/Utils.h"
 #include "Item.h"
-
 class ItemStack;
 class Inventory;
 class Player;
@@ -50,31 +50,58 @@ public:
 	virtual char isEmpty();
 	virtual __int64 add(ItemStack&);
 	virtual __int64 canAdd(const ItemStack&);
-	//virtual void unknown();
+	// virtual void unknown();
 	virtual __int64 clearSlot(int);
 	virtual __int64 clearInventory(int);
 	virtual __int64 load();  // ListTag const&,SemVersion const&,Level &
-	//virtual void unknown2();
+	// virtual void unknown2();
 	virtual __int64 getEmptySlotsCount();
 	virtual int getFirstEmptySlot();
 	virtual __int64 setContainerSize();
 
 	void moveItem(int from, int to);
 	void swapSlots(int from, int to);
+
+	bool isInContainerScreen() {
+		switch (*reinterpret_cast<int*>(this + 0x20)) {
+		case 3: {
+			return false;
+		} break;
+		case 4: {
+			return true;
+		} break;
+		}
+		return false;
+	}
+
+	class TextHolder getPlayerName() {
+		return *reinterpret_cast<class TextHolder*>(reinterpret_cast<__int64>(this) + 0x319);
+	}
+};
+
+class Container {
+public:
+	class ItemStack* getItemStackFromSlot(int slot) {
+		return Utils::CallVFunc<5, class ItemStack*, int>(this, slot);
+	}
 };
 
 class PlayerInventoryProxy {
 private:
-	char pad_0x0000[0x10];  //0x0000
+	char pad_0x0000[0x10];  // 0x0000
 public:
-	int selectedHotbarSlot;  //0x0010
+	int selectedHotbarSlot;  // 0x0010
 private:
-	char pad_0x0014[0x9C];  //0x0014
+	char pad_0x0014[0x9C];  // 0x0014
 public:
-	Inventory* inventory;  //0x00B0
+	Inventory* inventory;  // 0x00B0
+
+	class Container* getContainer() {
+		return reinterpret_cast<Container*>((uintptr_t)(this) + 0xD0);
+	}
 };
 
-//Im not sure exactly where these unknown's go but the funcs we use work.
+// Im not sure exactly where these unknown's go but the funcs we use work.
 
 class ContainerScreenController {
 private:
