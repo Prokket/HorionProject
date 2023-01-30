@@ -90,13 +90,12 @@ void GameData::updateGameData(GameMode* gameMode) {
 	retrieveClientInstance();
 	Game.localPlayer = Game.getLocalPlayer();
 
-	if (Game.localPlayer != nullptr && gameMode->player == Game.localPlayer) {  // GameMode::tick might also be run on the local server
+	if (Game.localPlayer != nullptr && gameMode->player == Game.localPlayer) {
 		Game.gameMode = gameMode;
 		QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&Game.lastUpdate));
 
 		if (Game.localPlayer != nullptr) {
 			GuiData* guiData = Game.clientInstance->getGuiData();
-
 			if (guiData != nullptr) {
 				{
 					auto vecLock = Logger::GetTextToPrintLock();
