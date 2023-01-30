@@ -19,6 +19,7 @@ void ModuleManager::initModules() {
 	{
 		auto lock = lockModuleListExclusive();
 
+		moduleList.emplace_back(new FastPlace());
 		moduleList.emplace_back(new FollowPathModule());
 		moduleList.emplace_back(new InventoryCleaner());
 		// moduleList.emplace_back(new InfiniteAura());

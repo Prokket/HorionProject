@@ -72,3 +72,4 @@ void mce::Mesh::renderMesh(__int64 screenContext, mce::MaterialPtr *material, si
 
 	renderMesh(this, screenContext + 0x10, material, &data);
 }
+

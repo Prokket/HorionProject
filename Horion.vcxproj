@@ -290,6 +290,7 @@
     <ClCompile Include="Horion\Module\Modules\Blink.cpp" />
     <ClCompile Include="Horion\Module\Modules\BowAimbot.cpp" />
     <ClCompile Include="Horion\Module\Modules\ChestAura.cpp" />
+    <ClCompile Include="Horion\Module\Modules\FastPlace.cpp" />
     <ClCompile Include="Horion\Module\Modules\StorageESP.cpp" />
     <ClCompile Include="Horion\Module\Modules\ChestStealer.cpp" />
     <ClCompile Include="Horion\Module\Modules\ClickGuiMod.cpp" />
@@ -468,6 +469,7 @@
     <ClInclude Include="Horion\Module\Modules\ESP.h" />
     <!--    <ClInclude Include="Horion\Module\Modules\FastEat.h" /> -->
     <ClInclude Include="Horion\Module\Modules\FastLadder.h" />
+    <ClInclude Include="Horion\Module\Modules\FastPlace.h" />
     <ClInclude Include="Horion\Module\Modules\FastStop.h" />
     <ClInclude Include="Horion\Module\Modules\Fly.h" />
     <ClInclude Include="Horion\Module\Modules\FollowPathModule.h" />

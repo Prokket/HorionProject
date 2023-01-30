@@ -9,6 +9,7 @@
 
 #include "../../Memory/GameData.h"
 
+#include "Modules/FastPlace.h"
 #include "Modules/FollowPathModule.h"
 #include "Modules/InventoryCleaner.h"
 //#include "Modules/Notifications.h"
