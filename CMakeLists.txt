@@ -42,8 +42,6 @@ add_library(Horion SHARED
         Horion/Command/Commands/EjectCommand.h
         Horion/Command/Commands/EnchantCommand.cpp
         Horion/Command/Commands/EnchantCommand.h
-        Horion/Command/Commands/ExecuteCommand.cpp
-        Horion/Command/Commands/ExecuteCommand.h
         Horion/Command/Commands/FriendListCommand.cpp
         Horion/Command/Commands/FriendListCommand.h
         Horion/Command/Commands/GameModeCommand.cpp
