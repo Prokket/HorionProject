@@ -12,7 +12,9 @@ const char* Freecam::getModuleName() {
 }
 
 void Freecam::onTick(GameMode* gm) {
-	gm->player->fallDistance = gm->player->velocity = Vec3(0, 0, 0), gm->player->aabb.upper = gm->player->aabb.lower;
+	gm->player->fallDistance = 0.f;
+	gm->player->velocity = Vec3(0, 0, 0);
+	gm->player->aabb.upper = gm->player->aabb.lower;
 }
 
 void Freecam::onEnable() {
