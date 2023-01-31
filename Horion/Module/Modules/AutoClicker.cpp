@@ -15,18 +15,20 @@ const char* AutoClicker::getModuleName() {
 }
 
 void AutoClicker::onTick(GameMode* gm) {
-	if ((GameData::isLeftClickDown() || !hold) && GameData::canUseMoveKeys()) {
-		LocalPlayer* player = Game.getLocalPlayer();
-		Level* level = player->level;
-		Odelay++;
+	if (!GameData::canUseMoveKeys())
+		return;
+	LocalPlayer* player = Game.getLocalPlayer();
+	Level* level = player->level;
 
-		if (Odelay >= delay) {
+	if (Odelay >= delay) {
+		Odelay = 0;
+
+		if (GameData::isLeftClickDown() || !hold) {
 			auto selectedItem = player->getSelectedItem();
 			if (weapons && selectedItem->getAttackingDamageWithEnchants() < 1)
 				return;
 
 			player->swingArm();
-
 			if (level->hasEntity() != 0)
 				gm->attack(level->getEntity());
 			else if (breakBlocks) {
@@ -36,19 +38,12 @@ void AutoClicker::onTick(GameMode* gm) {
 				if (isDestroyed && player->region->getBlock(level->block)->blockLegacy->blockId != 0)
 					gm->destroyBlock(&level->block, 0);
 			}
-			Odelay = 0;
 		}
-	}
 
-	if (rightclick) {
-		if ((GameData::isRightClickDown() || !hold) && GameData::canUseMoveKeys()) {
-			Level* level = Game.getLocalPlayer()->level;
-			Odelay++;
-			if (Odelay >= delay) {
-				bool idk = true;
-				gm->buildBlock(new Vec3i(level->block), level->blockSide, idk);
-				Odelay = 0;
-			}
+		if (rightclick && (GameData::isRightClickDown() || !hold)) {
+			bool idk = true;
+			gm->buildBlock(new Vec3i(level->block), level->blockSide, idk);
 		}
-	}
+	} else
+		Odelay++;
 }
