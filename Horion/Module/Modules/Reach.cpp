@@ -15,7 +15,7 @@ const char* Reach::getModuleName() {
 	return ("Reach");
 }
 
-void Reach::onTick(GameMode* gm) {
+/* void Reach::onTick(GameMode* gm) {
 	if (reachPtr != 0) {
 		*reachPtr = reachValue;
 	}
@@ -45,4 +45,4 @@ void Reach::onDisable() {
 	*reachPtr = originalReach;
 	if (reachPtr != 0)
 		VirtualProtect(reachPtr, sizeof(float), oldProtect, &oldProtect);
-}
+} */

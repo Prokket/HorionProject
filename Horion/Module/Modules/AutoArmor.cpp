@@ -2,7 +2,7 @@
 #include "../../../Utils/Utils.h"
 #include "../../../Utils/Logger.h"
 
-class ArmorStruct {
+/* class ArmorStruct {
 public:
 	ArmorStruct(ItemStack* item, ArmorItem* yot, int slot) {
 		armor = yot;
@@ -22,7 +22,7 @@ public:
 	ArmorItem* armor = nullptr;
 	ItemStack* m_item = nullptr;
 	int m_slot = 0;
-};
+}; */
 
 AutoArmor::AutoArmor() : IModule(0, Category::PLAYER, "Automatically equips the best armor.") {
 }
@@ -34,7 +34,7 @@ const char* AutoArmor::getModuleName() {
 	return ("AutoArmor");
 }
 
-void AutoArmor::onTick(GameMode* gm) {
+/*void AutoArmor::onTick(GameMode* gm) {
 	PlayerInventoryProxy* supplies = Game.getLocalPlayer()->getSupplies();
 	Inventory* inv = supplies->inventory;
 	InventoryTransactionManager* manager = Game.getLocalPlayer()->getTransactionManager();
@@ -46,7 +46,7 @@ void AutoArmor::onTick(GameMode* gm) {
 	if (emptyItemStack == 0x0) {
 		uintptr_t sigOffset = FindSignature("E8 ? ? ? ? 4D 8B 7D ? 4D 85 FF");
 		int offset = *reinterpret_cast<int*>(sigOffset + 3);
-		emptyItemStack = reinterpret_cast<ItemStack*>(sigOffset + offset + /*length of instruction*/ 7);
+		emptyItemStack = reinterpret_cast<ItemStack*>(sigOffset + offset + /*length of instruction 7);
 	}
 
 	std::vector<ArmorStruct> armorList;
@@ -117,4 +117,4 @@ void AutoArmor::onTick(GameMode* gm) {
 		armorList.clear();
 	}
 	armorList.clear();
-}
+}*/
