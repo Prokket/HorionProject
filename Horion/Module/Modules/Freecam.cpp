@@ -12,16 +12,11 @@ const char* Freecam::getModuleName() {
 }
 
 void Freecam::onTick(GameMode* gm) {
-	gm->player->fallDistance = 0.f;
-	gm->player->velocity = Vec3(0, 0, 0);
-	gm->player->aabb.upper = gm->player->aabb.lower;
+	gm->player->fallDistance = gm->player->velocity = Vec3(0, 0, 0), gm->player->aabb.upper = gm->player->aabb.lower;
 }
 
 void Freecam::onEnable() {
-	if (Game.getLocalPlayer() != nullptr) {
-		oldPos = *Game.getLocalPlayer()->getPos();
-		oldOffset = Game.getLocalPlayer()->aabb.upper.sub(Game.getLocalPlayer()->aabb.lower);
-	}
+	(Game.getLocalPlayer() != nullptr) ? (oldPos = *Game.getLocalPlayer()->getPos(), oldOffset = Game.getLocalPlayer()->aabb.upper.sub(Game.getLocalPlayer()->aabb.lower)) : (void)0;
 }
 
 void Freecam::onMove(MoveInputHandler* input) {
@@ -53,7 +48,7 @@ void Freecam::onDisable() {
 	auto plr = Game.getLocalPlayer();
 	if (plr) {
 		plr->setPos(oldPos);
-		*Game.getClientInstance()->minecraft->timer = 20.f;
+		*Game.getClientInstance()->minecraft->timer += 20.f;
 		plr->aabb.upper = plr->aabb.lower.add(oldOffset);
 	}
 }

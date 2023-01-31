@@ -26,11 +26,5 @@ void FullBright::onEnable() {
 }
 
 void FullBright::onDisable() {
-	if (gammaPtr != nullptr) {
-		if (originalGamma >= 0 && originalGamma <= 1)
-			*gammaPtr = originalGamma;
-		else
-			*gammaPtr = 0.5f;
-	}
-		
+	if (gammaPtr != nullptr) *gammaPtr = (originalGamma >= 0 && originalGamma <= 1) ? originalGamma : 0.5f;
 }
