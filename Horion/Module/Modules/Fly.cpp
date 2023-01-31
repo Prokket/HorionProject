@@ -18,7 +18,7 @@ Fly::~Fly() {
 }
 
 const char *Fly::getModuleName() {
-	return ("Fly");
+	return ("ChildMolester");
 }
 
 void Fly::onEnable() {
