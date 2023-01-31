@@ -57,7 +57,7 @@ void Hooks::Init() {
 		void* lerpFunc = reinterpret_cast<void*>(FindSignature("48 8D 05 ? ? ? ? 48 89 01 49 8B 00 48 89 41 ? 48"));
 		g_Hooks.Actor_lerpMotionHook = std::make_unique<FuncHook>(lerpFunc, Hooks::Actor_lerpMotion);
 
-		void* getRenderLayer = reinterpret_cast<void*>(FindSignature("8B 81 ? ? ? ? C3 CC CC CC CC CC CC CC CC CC F3 0F 10 81"));
+		void* getRenderLayer = reinterpret_cast<void*>(FindSignature("48 8D 05 ? ? ? ? 48 89 01 66 89 51 ? 4D 85 C0 0F 84 ? ? ? ? 4C 89 41 ? 33 FF"));
 		g_Hooks.BlockLegacy_getRenderLayerHook = std::make_unique<FuncHook>(getRenderLayer, Hooks::BlockLegacy_getRenderLayer);
 
 		void* getLightEmission = reinterpret_cast<void*>(FindSignature("0F B6 81 ? ? ? ? 88 02 48 8B C2"));
@@ -66,7 +66,7 @@ void Hooks::Init() {
 		//void* ascendLadder = reinterpret_cast<void*>(FindSignature("C7 81 ? ? ? ? ? ? ? ? C3 CC CC CC CC CC C7 81 ? ? ? ? ? ? ? ? C3 CC CC CC CC CC C7 81"));
 		//g_Hooks.Actor_ascendLadderHook = std::make_unique<FuncHook>(ascendLadder, Hooks::Actor_ascendLadder);
 
-		void* getGameEdition = reinterpret_cast<void*>(FindSignature("8B 91 ?? ?? ?? ?? 85 D2 74 1C 83 EA 01"));
+		void* getGameEdition = reinterpret_cast<void*>(FindSignature("48 89 4C 24 ? 53 48 83 EC 30 48 8B D9 33 C0 89 44 24 ? 48 89 01"));
 		g_Hooks.AppPlatform_getGameEditionHook = std::make_unique<FuncHook>(getGameEdition, Hooks::AppPlatform_getGameEdition);
 
 		void* getFov = reinterpret_cast<void*>(FindSignature("40 53 48 83 EC ?? 0F 29 7C 24 ?? 44"));
