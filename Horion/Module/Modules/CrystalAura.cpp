@@ -26,16 +26,11 @@ void CrystalAura::onEnable() {
 }
 
 bool CfindEntity(Entity* curEnt, bool isRegularEntity) {
-	if (curEnt == nullptr) return false;
-	if (curEnt == Game.getLocalPlayer()) return false;  // Skip Local player
-	if (!curEnt->isAlive()) return false;
-	if (!Game.getLocalPlayer()->isAlive()) return false;
-	if (curEnt->getEntityTypeId() == 71) return false;  // endcrystal
-	if (curEnt->getEntityTypeId() == 66) return false;  // falling block
-	if (curEnt->getEntityTypeId() == 64) return false;  // item
-	if (curEnt->getEntityTypeId() == 69) return false;  // xp orb
-	if (!Target::isValidTarget(curEnt)) return false;
-
+	if (!curEnt || curEnt == Game.getLocalPlayer() || !curEnt->isAlive() || !Game.getLocalPlayer()->isAlive() ||
+		curEnt->getEntityTypeId() == 71 || curEnt->getEntityTypeId() == 66 || curEnt->getEntityTypeId() == 64 ||
+		curEnt->getEntityTypeId() == 69 || !Target::isValidTarget(curEnt)) {
+		return false;
+	}
 	float dist = (*curEnt->getPos()).dist(*Game.getLocalPlayer()->getPos());
 	if (dist <= moduleMgr->getModule<CrystalAura>()->pRange) {
 		targetList.push_back(curEnt);
@@ -102,19 +97,21 @@ void CrystalAura::CPlace(GameMode* gm, Vec3* pos) {
 }
 
 void CrystalAura::DestroyC(Entity* ent, int range) {
-	if (Game.getLocalPlayer()->getPos()->dist(*ent->getPos()) < range && !dEnhanced) {
-		Game.getGameMode()->attack(ent);
-		Game.getLocalPlayer()->swingArm();
-	} else if (dEnhanced) {
-		for (auto& i : targetList)
+	if (!dEnhanced) {
+		if (Game.getLocalPlayer()->getPos()->dist(*ent->getPos()) < range) {
+			Game.getGameMode()->attack(ent);
+			Game.getLocalPlayer()->swingArm();
+		}
+	} else {
+		for (auto& i : targetList) {
 			if (ent->getPos()->dist(*i->getPos()) < range) {
 				Game.getGameMode()->attack(ent);
 				Game.getLocalPlayer()->swingArm();
 				return;
 			}
+		}
 	}
 }
-
 bool shouldChange = false;
 void CrystalAura::onTick(GameMode* gm) {
 	if (shouldChange) {
@@ -201,7 +198,6 @@ void CrystalAura::onPreRender(MinecraftUIRenderContext* renderCtx) {
 								   ptr->block.add(1).toVec3t().add(0.f, 1.5f, 0.f), .3f);
 			}
 }
-
 void CrystalAura::onDisable() {
 	delay = 0;
 }
