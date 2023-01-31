@@ -31,39 +31,29 @@ void Reducer::onEnable() {
 }
 
 void Reducer::onTick(GameMode* gm) {
-	if (Game.getLocalPlayer() == nullptr) return;
+    LocalPlayer* player = Game.getLocalPlayer();
+    if (!player) return;
 
-	LocalPlayer* player = Game.getLocalPlayer();
-
-	switch (this->mode.selected) {
-	case 0:
-		if (player->damageTime > 0 && player->onGround) player->jumpFromGround();
-		break;
-	case 1:
-		if (player->damageTime > 0 && !player->isSneaking()) {
-			player->setSneaking(true);
-			player->setSneaking(false);
-		}
-		break;
-	case 2:
-		ticks++;
-
-		if (player->damageTime == 1) {
-			this->hitCount++;
-		}
-
-		if (player->damageTime > 0) {
-			this->ticks = 0;
-		}
-
-		if (this->ticks >= 20) {
-			this->hitCount = 0;
-		}
-
-		if (player->damageTime > 0 && this->hitCount == 2 && player->onGround) {
-			player->jumpFromGround();
-			this->hitCount = 0;
-		}
-		break;
-	}
+    switch (mode.selected) {
+        case 0:
+            if (player->damageTime > 0 && player->onGround) 
+                player->jumpFromGround();
+            break;
+        case 1:
+            if (player->damageTime > 0 && !player->isSneaking()) {
+                player->setSneaking(true);
+                player->setSneaking(false);
+            }
+            break;
+        case 2:
+            ticks++;
+            if (player->damageTime == 1) hitCount++;
+            if (player->damageTime > 0) ticks = 0;
+            if (ticks >= 20) hitCount = 0;
+            if (player->damageTime > 0 && hitCount == 2 && player->onGround) {
+                player->jumpFromGround();
+                hitCount = 0;
+            }
+            break;
+    }
 }
