@@ -14,7 +14,6 @@ const char* AutoSprint::getModuleName() {
 void AutoSprint::onTick(GameMode* gm) {
 	if (!gm->player->isSprinting() && gm->player->velocity.magnitudexz() > 0.01f) {
 		GameSettingsInput* input = Game.getClientInstance()->getGameSettingsInput();
-		if (alldirections || GameData::isKeyDown(*input->forwardKey))
-			gm->player->setSprinting(true);
+		gm->player->setSprinting((alldirections) ? true : GameData::isKeyDown(*input->forwardKey));
 	}
 }

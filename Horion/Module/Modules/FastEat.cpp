@@ -11,25 +11,23 @@ const char* FastEat::getModuleName() {
 }
 
 void FastEat::onTick(GameMode* gm) {
-	C_PlayerInventoryProxy* supplies = Game.getLocalPlayer()->getSupplies();
-	C_Inventory* inv = supplies->inventory;
-	for (int i = 0; i < 36; i++) {
-		C_ItemStack* stack = inv->getItemStack(i);
-		if (stack->item != NULL && (*stack->item)->itemId != 261 && (*stack->item)->duration == 32) {
+	PlayerInventoryProxy* supplies = Game.getLocalPlayer()->getSupplies();
+	Inventory* inv = supplies->inventory;
+	
+	for (ItemStack* stack : inv->itemStacks) {
+		if (stack->item != NULL && (*stack->item)->itemId != 261 && (*stack->item)->duration == 32)
 			(*stack->item)->setMaxUseDuration(5);
-		}
 	}
 }
 
 void FastEat::onDisable() {
 	if (Game.getLocalPlayer() == nullptr)
 		return;
-	C_PlayerInventoryProxy* supplies = Game.getLocalPlayer()->getSupplies();
-	C_Inventory* inv = supplies->inventory;
-	for (int i = 0; i < 36; i++) {
-		C_ItemStack* stack = inv->getItemStack(i);
-		if (stack->item != NULL && (*stack->item)->itemId != 261 && (*stack->item)->duration == 5) {
+	PlayerInventoryProxy* supplies = Game.getLocalPlayer()->getSupplies();
+	Inventory* inv = supplies->inventory;
+	
+	for (ItemStack* stack : inv->itemStacks) {
+		if (stack->item != NULL && (*stack->item)->itemId != 261 && (*stack->item)->duration == 5)
 			(*stack->item)->setMaxUseDuration(32);
-		}
 	}
 }
