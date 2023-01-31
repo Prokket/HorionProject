@@ -228,15 +228,8 @@ std::vector<int> InventoryCleaner::findUselessItems() {
 
 	return uselessItems;
 }
-
 bool InventoryCleaner::stackIsUseful(ItemStack* itemStack) {
-	if (itemStack->item == nullptr) return true;
-	if (keepArmor && (*itemStack->item)->isArmor()) return true;      // Armor
-	if (keepTools && (*itemStack->item)->isTool()) return true;       // Tools
-	if (keepFood && (*itemStack->item)->isFood()) return true;        // Food
-	if (keepBlocks && (*itemStack->item)->isBlock()) return true;     // Block
-	if (keepTools && (*itemStack->item)->itemId == 368) return true;  // Ender Pearl
-	return false;
+return (itemStack->item && (keepArmor && (*itemStack->item)->isArmor() || keepTools && (*itemStack->item)->isTool() || keepFood && (*itemStack->item)->isFood() || keepBlocks && (*itemStack->item)->isBlock() || keepTools && (*itemStack->item)->itemId == 368));
 }
 
 bool InventoryCleaner::isLastItem(Item* item) {
@@ -245,10 +238,5 @@ bool InventoryCleaner::isLastItem(Item* item) {
 		ItemStack* stack = Game.getLocalPlayer()->getSupplies()->inventory->getItemStack(i);
 		if (stack->item != nullptr) items.push_back((*stack->item));
 	}
-	int count = 0;
-	for (Item* a : items) {
-		if (a == item) count++;
-	}
-	if (count > 1) return false;
-	return true;
+	return std::find(items.begin(), items.end(), item) == items.end();
 }
