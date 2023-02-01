@@ -13,10 +13,8 @@ const char* AirSwim::getModuleName() {
 void AirSwim::onEnable() {
 	if (Game.getLocalPlayer() == nullptr)
 		return;
-	Game.getLocalPlayer()->didEnterWaterBool = true;
-	Game.getLocalPlayer()->startSwimming();
-}
-
+	if (Game.getLocalPlayer() && Game.getLocalPlayer()->didEnterWaterBool) { Game.getLocalPlayer()->startSwimming();
+	}
 void AirSwim::onTick(GameMode* gm) {
 	Game.getLocalPlayer()->didEnterWaterBool = true;
 	Game.getLocalPlayer()->doWaterSplashEffect();

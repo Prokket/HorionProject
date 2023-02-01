@@ -94,11 +94,6 @@ bool Target::isValidTarget(Entity* ent) {
 }
 
 bool Target::containsOnlyASCII(const std::string& string) {
-	for (auto c : string) {
-		int n = static_cast<unsigned char>(c);
-		if (n > 127 && n != -89) {
-			return false;
-		}
+return std::allof(string.begin(), string.end(), [](char c){ return staticcast<unsigned char>(c) <= 127 || static_cast<unsigned char>(c) == -89; 
 	}
-	return true;
-}
+);
