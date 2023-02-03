@@ -1,4 +1,5 @@
 #include "ChestStealer.h"
+
 #include "../ModuleManager.h"
 
 ChestStealer::ChestStealer() : IModule(0, Category::PLAYER, "Automatically takes all items out of a chest.") {
@@ -32,6 +33,7 @@ void ChestStealer::chestScreenController_tick(ChestScreenController* c) {
 				} else if (setDelay == 0)
 					c->handleAutoPlace("container_items", i);
 			}
-		} else c->tryExit();
+		} else
+			c->tryExit();
 	}
 }
