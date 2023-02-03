@@ -144,6 +144,8 @@ add_library(Horion SHARED
         Horion/Module/Modules/CubeGlide.h
         Horion/Module/Modules/Derp.cpp
         Horion/Module/Modules/Derp.h
+        Horion/Module/Modules/Disabler.cpp
+        Horion/Module/Modules/Disabler.h
         Horion/Module/Modules/EditionFaker.cpp
         Horion/Module/Modules/EditionFaker.h
         Horion/Module/Modules/ESP.cpp

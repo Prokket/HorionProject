@@ -3,7 +3,7 @@
 
 class Disabler : public IModule {
 public:
-	bool netherDis = true;
+	bool lifeboatDis = true;
 	int multiplier = 30;
 	int ticks = 4;
 	int tick = 0;
@@ -13,13 +13,13 @@ public:
 
 	// Inherited via IModule
 	virtual const char* getModuleName() override;
-	void onEnable();
-	virtual void onTick(C_GameMode* gm) override;
-	virtual void onMove(C_MoveInputHandler* input) override;
-	virtual void onSendPacket(C_Packet* packet) override;
-	// virtual void onSendPacket(C_Packet* packet) override;
-	inline std::vector<C_MovePlayerPacket*>* getMovePlayerPacketHolder() { return &MovePlayerPacketHolder; };
+	//void onEnable();
+	virtual void onTick(GameMode* gm) override;
+	//virtual void onMove(MoveInputHandler* input) override;
+	virtual void onSendPacket(Packet* packet) override;
+	// virtual void onSendPacket(Packet* packet) override;
+	inline std::vector<MovePlayerPacket*>* getMovePlayerPacketHolder() { return &MovePlayerPacketHolder; };
 	inline std::vector<PlayerAuthInputPacket*>* getPlayerAuthInputPacketHolder() { return &PlayerAuthInputPacketHolder; };
-	std::vector<C_MovePlayerPacket*> MovePlayerPacketHolder;
+	std::vector<MovePlayerPacket*> MovePlayerPacketHolder;
 	std::vector<PlayerAuthInputPacket*> PlayerAuthInputPacketHolder;
 };

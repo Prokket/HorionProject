@@ -9,6 +9,7 @@
 
 #include "../../Memory/GameData.h"
 
+#include "Modules/Disabler.h"
 #include "Modules/Reducer.h"
 #include "Modules/FastPlace.h"
 #include "Modules/FollowPathModule.h"

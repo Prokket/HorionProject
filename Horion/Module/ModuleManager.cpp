@@ -19,6 +19,7 @@ void ModuleManager::initModules() {
 	{
 		auto lock = lockModuleListExclusive();
 
+		moduleList.emplace_back(new Disabler());
 		moduleList.emplace_back(new Reducer());
 		moduleList.emplace_back(new FastPlace());
 		moduleList.emplace_back(new FollowPathModule());
