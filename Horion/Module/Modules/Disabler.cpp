@@ -1,7 +1,5 @@
 #include "Disabler.h"
 
-#include "Disabler.h"
-
 Disabler::Disabler() : IModule(0, Category::MISC, "AntiCheat Blocker Works in Lifeboat") {
 	this->registerBoolSetting("Lifeboat", &this->lifeboatDis, this->lifeboatDis);
 }
