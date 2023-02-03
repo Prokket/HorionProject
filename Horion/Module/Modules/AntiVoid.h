@@ -11,7 +11,6 @@ private:
 public:
 	MoveInputHandler* inputHandler = nullptr;
 	AntiVoid();
-	~AntiVoid();
 
 	// Inherited via IModule
 	virtual const char* getModuleName() override;

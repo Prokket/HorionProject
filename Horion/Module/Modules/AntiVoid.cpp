@@ -4,9 +4,6 @@ AntiVoid::AntiVoid() : IModule(0, Category::MOVEMENT, "Automatically teleports y
 	registerIntSetting("Distance", &distance, distance, 1, 20);
 }
 
-AntiVoid::~AntiVoid() {
-}
-
 const char* AntiVoid::getModuleName() {
 	return ("AntiVoid");
 }
@@ -14,8 +11,7 @@ const char* AntiVoid::getModuleName() {
 void AntiVoid::onTick(GameMode* gm) {
 	LocalPlayer* player = Game.getLocalPlayer();
 	Vec3 blockBelow = player->eyePos0;
-	blockBelow.y -= player->height;
-	blockBelow.y -= 0.5f;
+	blockBelow.y -= 1.0f;
 
 	if (((player->region->getBlock(blockBelow)->blockLegacy))->blockId != 0 && ((player->region->getBlock(blockBelow)->blockLegacy))->material->isSolid) {
 		savepos = blockBelow;
