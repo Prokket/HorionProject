@@ -1,14 +1,14 @@
 #include "Aimbot.h"
 
 Aimbot::Aimbot() : IModule(0, Category::COMBAT, "Automatically aims at the nearest entity.") {
-	registerFloatSetting("Range", &range, range, 3.f, 8.f);
+	registerFloatSetting("Range", &range, range, 3.f, 50.f);
 	registerBoolSetting("Require Click", &click, click);
 	registerBoolSetting("Only Swords/Axes", &sword, sword);
 	registerBoolSetting("Vertical", &vertical, vertical);
 	registerFloatSetting("Horizontal Speed", &horizontalspeed, horizontalspeed, 10.f, 90.f);
 	registerFloatSetting("Vertical Speed", &verticalspeed, verticalspeed, 10.f, 90.f);
-	registerFloatSetting("Horizontal Range", &horizontalrange, horizontalrange, 20.f, 180.f);
-	registerFloatSetting("Vertical Range", &verticalrange, verticalrange, 20.f, 180.f);
+	registerFloatSetting("Horizontal Range", &horizontalrange, horizontalrange, 20.f, 360.f);
+	registerFloatSetting("Vertical Range", &verticalrange, verticalrange, 20.f, 360.f);
 	registerBoolSetting("Aimlock", &lock, lock);
 }
 
@@ -71,8 +71,8 @@ void Aimbot::onPostRender(MinecraftUIRenderContext* renderCtx) {
 				return;
 
 			if (!lock) {
-				appl.x /= (100.f - verticalspeed);
-				appl.y /= (100.f - horizontalspeed);
+				appl.x /= (360.f - verticalspeed);
+				appl.y /= (360.f - horizontalspeed);
 				if (appl.x >= 1 || appl.x <= -1) appl.div(abs(appl.x));
 				if (appl.y >= 1 || appl.y <= -1) appl.div(abs(appl.y));
 			}
