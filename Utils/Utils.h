@@ -452,6 +452,8 @@ public:
 		return Game.getSlimMem()->ReadPtr<T>(Game.getModule()->ptrBase + ptrAddress, Offsets);
 	};
 
+	static void patchBytes(unsigned char* dst, unsigned char* src, unsigned int size);
+
 	static void GetCurrentSystemTime(tm& timeInfo);
 
 	static void ApplySystemTime(std::stringstream* ss);

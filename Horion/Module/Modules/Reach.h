@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Module.h"
 
 class Reach : public IModule {
@@ -11,6 +12,8 @@ private:
 public:
 	Reach();
 	~Reach();
+
+	SettingEnum type = (*new SettingEnum());
 
 	// Inherited via IModule
 	virtual const char* getModuleName() override;
