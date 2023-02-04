@@ -69,19 +69,19 @@ void findEntity(Entity* currentEntity, bool isRegularEntity) {
 void Killaura::findWeapon() {
 	PlayerInventoryProxy* supplies = Game.getLocalPlayer()->getSupplies();
 	Inventory* inv = supplies->inventory;
-	float damage = 0;
-	int slot = supplies->selectedHotbarSlot;
+	float max_damage = 0;
+	int best_slot = supplies->selectedHotbarSlot;
+
 	for (int n = 0; n < 9; n++) {
 		ItemStack* stack = inv->getItemStack(n);
-		if (stack->item != nullptr) {
-			float currentDamage = stack->getAttackingDamageWithEnchants();
-			if (currentDamage > damage) {
-				damage = currentDamage;
-				slot = n;
-			}
+		if (stack->item == nullptr) continue;
+		float current_damage = stack->getAttackingDamageWithEnchants();
+		if (current_damage > max_damage) {
+			max_damage = current_damage;
+			best_slot = n;
 		}
 	}
-	supplies->selectedHotbarSlot = slot;
+	supplies->selectedHotbarSlot = best_slot;
 }
 
 void Killaura::onTick(GameMode* gm) {
