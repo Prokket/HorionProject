@@ -128,13 +128,13 @@ void Killaura::onEnable() {
 }
 
 void Killaura::onSendPacket(Packet* packet) {
-	if (packet->isInstanceOf<MovePlayerPacket>() && Game.getLocalPlayer() != nullptr && silent) {
-		if (!targetList.empty()) {
-			auto* movePacket = reinterpret_cast<MovePlayerPacket*>(packet);
-			Vec2 angle = Game.getLocalPlayer()->getPos()->CalcAngle(*targetList[0]->getPos());
-			movePacket->pitch = angle.x;
-			movePacket->headYaw = angle.y;
-			movePacket->yaw = angle.y;
-		}
-	}
+  if (!packet->isInstanceOf<MovePlayerPacket>() || Game.getLocalPlayer() == nullptr || !silent)
+    return;
+  auto* movePacket = reinterpret_cast<MovePlayerPacket*>(packet);
+  if (targetList.empty())
+    return;
+  Vec2 angle = Game.getLocalPlayer()->getPos()->CalcAngle(*targetList[0]->getPos());
+  movePacket->pitch = angle.x;
+  movePacket->headYaw = angle.y;
+  movePacket->yaw = angle.y;
 }
