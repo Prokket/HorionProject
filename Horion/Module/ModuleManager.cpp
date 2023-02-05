@@ -18,7 +18,8 @@ void ModuleManager::initModules() {
 	logF("Initializing modules.");
 	{
 		auto lock = lockModuleListExclusive();
-
+  
+  moduleList.emplace_back(new BoostHit());
 		moduleList.emplace_back(new Disabler());
 		moduleList.emplace_back(new Reducer());
 		moduleList.emplace_back(new FastPlace());
